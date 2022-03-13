@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RengaTask1
 {
-    class SimpleButton
+    class CountSelectionButton
     {
         private Renga.IUI m_ui;
         private Renga.ActionEventSource m_actionEvents;
@@ -14,7 +14,7 @@ namespace RengaTask1
 
         internal Renga.IAction Action { get; }
 
-        public SimpleButton(Renga.IUI ui, string tooltip, Renga.Application app)
+        public CountSelectionButton(Renga.IUI ui, string tooltip, Renga.Application app)
         {
             m_ui = ui;            
             Action = ui.CreateAction();
@@ -24,27 +24,10 @@ namespace RengaTask1
         }
 
         protected virtual void onActionEventsTriggered(object sender, EventArgs e)
-        {
-
-            //Попытки притащить выделенные объекты
-
-            Renga.IProject project = local_app.Project;
-            Renga.IModel model = project.Model;
-            Renga.IModelObjectCollection modelObjectCollection = model.GetObjects();
-            Renga.ISelection selection = app.Selection;
-
-            System.Array select = selection.GetSelectedObjects();
-
-            String pr = "";
-
-            foreach (var item in select)
-                pr += item.ToString();
-
-            //Попытки кончаются здесь
-
+        {          
             m_ui.ShowMessageBox(Renga.MessageIcon.MessageIcon_Info,
                                 "Count select",
-                                pr);
+                                "SampleText");
         }
 
         public void AddToPanel(Renga.IUIPanelExtension panel)
@@ -54,7 +37,7 @@ namespace RengaTask1
     }
     public class SamplePlugin : Renga.IPlugin
     {
-        List<SimpleButton> m_buttons = new List<SimpleButton>();
+        List<CountSelectionButton> m_buttons = new List<CountSelectionButton>();
 
         public bool Initialize(string pluginFolder)
         {
@@ -66,9 +49,9 @@ namespace RengaTask1
 
 
 
-            var btn1 = new SimpleButton(ui, "Count selection", app);
-            var btn2 = new SimpleButton(ui, "Sample button1", app);
-            var btn3 = new SimpleButton(ui, "Sample button2", app);
+            var btn1 = new CountSelectionButton(ui, "Count selection", app);
+            var btn2 = new CountSelectionButton(ui, "Sample button1", app);
+            var btn3 = new CountSelectionButton(ui, "Sample button2", app);
 
             m_buttons.Add(btn1);
             m_buttons.Add(btn2);
